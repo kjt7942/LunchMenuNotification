@@ -10,6 +10,8 @@ on:
 jobs:
   send_alarm:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true' # 노드 24 강제 사용 설정 (경고 제거)
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
