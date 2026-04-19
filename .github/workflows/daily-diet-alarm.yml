@@ -1,0 +1,33 @@
+name: Daily Diet Alarm
+
+on:
+  schedule:
+    # 한국 시간(KST) 오전 07:40은 UTC 기준 전날 22:40입니다.
+    # 월~금 실행: 22:40 (일~목 UTC)
+    - cron: '40 22 * * 0-4'
+  workflow_dispatch: # 수동 실행 가능 옵션
+
+jobs:
+  send_alarm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/checkout@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Alarm
+        run: npx ts-node src/domain/diet/runtime/alarm.ts
+        env:
+          SMTP_HOST: 'smtp.gmail.com'
+          SMTP_PORT: '465'
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+          SCHOOL_URL: 'https://school.gyo6.net/mkgms/ad/fm/foodmenu/selectFoodMenuView.do?mi=153190'
