@@ -46,12 +46,7 @@ export class DietAlarmService {
     }
 
     if (!todayMenu) {
-      console.log('No menu found for today. Sending status email.');
-      await this.emailProvider.sendEmail({
-        to: receiver,
-        subject: `[식단알림] 오늘은 식단 정보가 없습니다.`,
-        html: `<p>안녕하세요! 오늘(일요일 혹은 공휴일)은 등록된 식단 정보가 없습니다. 시스템은 정상 작동 중입니다! 😊</p>`,
-      });
+      console.log('No menu found for today. Skipping email.');
       return;
     }
 
