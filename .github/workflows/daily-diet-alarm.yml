@@ -22,7 +22,7 @@ jobs:
           node-version: '24'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Run Alarm
         run: npx ts-node src/domain/diet/runtime/alarm.ts
