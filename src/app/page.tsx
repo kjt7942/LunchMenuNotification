@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Check, Calendar, Utensils, Coffee, Moon, Sun } from 'lucide-react';
-import { dietService } from '../domain/diet/runtime';
+import { Plus, Check, Utensils, Coffee, Moon, Sun } from 'lucide-react';
 import { MealType, DietEntry } from '../domain/diet/types';
 
 export default function DietPage() {

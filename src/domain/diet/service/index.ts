@@ -1,7 +1,7 @@
 // src/domain/diet/service/index.ts
 // 식단 비즈니스 로직
 
-import { DietEntry, DietSummary } from '../types';
+import { DietEntry, DietSummary, SchoolFoodMenu } from '../types';
 import { DietRepository } from '../repo';
 
 export class DietService {
@@ -59,7 +59,7 @@ export class DietAlarmService {
     });
   }
 
-  private formatMenuToHtml(menu: any): string {
+  private formatMenuToHtml(menu: SchoolFoodMenu): string {
     return `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
         <h2 style="color: #4A90E2; border-bottom: 2px solid #4A90E2; padding-bottom: 10px;">🍴 오늘의 학교 식단</h2>

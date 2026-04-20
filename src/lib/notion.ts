@@ -13,7 +13,7 @@ export const fetchDatabase = async (databaseId: string) => {
   return response.results;
 };
 
-export const createPage = async (databaseId: string, properties: any) => {
+export const createPage = async (databaseId: string, properties: Parameters<typeof notion.pages.create>[0]['properties']) => {
   return await notion.pages.create({
     parent: { database_id: databaseId },
     properties,

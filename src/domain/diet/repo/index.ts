@@ -22,7 +22,7 @@ export class NotionDietRepository implements DietRepository {
     return 'new-id';
   }
 
-  async updateDiet(id: string, updates: Partial<DietEntry>): Promise<void> {
+  async updateDiet(id: string, _updates: Partial<DietEntry>): Promise<void> {
     console.log(`Updating diet ${id}`);
   }
 

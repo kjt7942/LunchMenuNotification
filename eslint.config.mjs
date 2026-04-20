@@ -43,6 +43,7 @@ const eslintConfig = [
           ],
         },
       ],
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     },
   }),
 ];
