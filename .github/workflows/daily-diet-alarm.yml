@@ -25,7 +25,7 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Run Alarm
-        run: npx ts-node src/domain/diet/runtime/alarm.ts
+        run: npx tsx src/domain/diet/runtime/alarm.ts
         env:
           SMTP_HOST: 'smtp.gmail.com'
           SMTP_PORT: '465'
