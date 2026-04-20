@@ -16,28 +16,40 @@ export class SchoolFoodMenuRepository {
       const menus: SchoolFoodMenu[] = [];
 
       // 달력의 각 날짜(td)를 순회하며 데이터 추출
-      $('table.calendar tbody td').each((_, td) => {
-        const dayText = $(td).find('em').text().trim();
+      $('table tbody td').each((_, td) => {
+        // 날짜 추출 (em 태그 또는 span.num)
+        const dayText = $(td).find('em, .num').first().text().trim();
         if (!dayText) return;
 
-        const menuText = $(td).find('ul').text().trim();
-        if (!menuText) return;
-
-        // 메뉴, 칼로리 등을 구분 (사이트 구조에 따라 정교화 필요)
-        const lines = menuText.split('\n').map(l => l.trim()).filter(l => l !== '');
-        
+        // 칼로리 추출 (p 태그 중 Kcal 포함)
         let calories = '';
-        const menuItems: string[] = [];
-
-        lines.forEach(line => {
-          if (line.includes('kcal')) {
-            calories = line;
-          } else if (line.match(/^\d/)) {
-            // 숫자로 시작하는 알레르기 정보 등은 제외하거나 처리
-          } else {
-            menuItems.push(line);
+        $(td).find('p').each((_, p) => {
+          const text = $(p).text().trim();
+          if (text.includes('Kcal')) {
+            calories = text;
           }
         });
+
+        // 메뉴 추출 (br 태그로 구분된 텍스트 또는 ul li)
+        const menuItems: string[] = [];
+        const menuContainer = $(td).find('p, ul').last();
+        
+        if (menuContainer.prop('tagName') === 'UL') {
+          menuContainer.find('li').each((_, li) => {
+            menuItems.push($(li).text().trim());
+          });
+        } else {
+          const html = menuContainer.html() || '';
+          const lines = html.split(/<br\s*\/?>/i);
+          lines.forEach(line => {
+            const cleanLine = cheerio.load(line).text().trim();
+            if (cleanLine && !cleanLine.includes('Kcal') && !cleanLine.includes('상세보기')) {
+              menuItems.push(cleanLine);
+            }
+          });
+        }
+
+        if (menuItems.length === 0) return;
 
         const dayFormatted = dayText.padStart(2, '0');
         const year = yearMonth.substring(0, 4);
@@ -45,7 +57,7 @@ export class SchoolFoodMenuRepository {
 
         menus.push({
           date: `${year}.${month}.${dayFormatted}`,
-          dayOfWeek: '', // 서버 데이터에 요일 정보가 명시적이지 않을 수 있음
+          dayOfWeek: '',
           menuItems,
           calories,
         });
