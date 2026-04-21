@@ -2,9 +2,9 @@ name: Daily Diet Alarm
 
 on:
   schedule:
-    # 한국 시간(KST) 오전 07:45은 UTC 기준 전날 22:45입니다.
-    # 월~금 실행: 22:45 (일~목 UTC)
-    - cron: '45 22 * * 0-4'
+    # 한국 시간(KST) 오전 06:45은 UTC 기준 전날 21:45입니다.
+    # 월~금 실행: 21:45 (일~목 UTC)
+    - cron: '45 21 * * 0-4'
   workflow_dispatch: # 수동 실행 가능 옵션
 
 jobs:
